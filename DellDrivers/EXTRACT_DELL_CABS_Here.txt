@@ -1,0 +1,3 @@
+Use a zip utility to EXTRACT the Dell Enterprise CAB file for the Dell hardware model you are using to SMOKE test the SCCM task sequence.
+
+Extract to this folder.

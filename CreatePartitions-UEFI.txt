@@ -1,0 +1,31 @@
+rem == Updated 7.12.2019 to include Dell SCCM Boot in Factory documented steps from here (page 18)
+rem == http://downloads.delltechcenter.com/CS/SCCM_Boot_in_the_Factory.pdf
+rem == CreatePartitions-UEFI.txt ==
+rem == These commands are used with DiskPart to
+rem    create four partitions
+rem    for a UEFI/GPT-based PC.
+rem    Adjust the partition sizes to fill the drive
+rem    as necessary. ==
+
+
+select disk 0
+clean
+convert gpt
+create partition efi size=512
+format quick fs=fat32 label="System"
+assign letter="S"
+create partition msr size=128
+
+rem == Needed to ensure additional space for other partitions. Adjust if SSD disk smaller than 90GB ==
+create partition primary size=90000
+format quick fs=ntfs label="Windows"
+assign letter="c"
+
+rem == Windows scratch partition for Dell Dynamic Driver Testing  ========================
+rem ==    a. Create the Windows scratch partition ==========
+create partition primary size=10000
+format quick fs=ntfs label="Scratch"
+assign letter="T"
+
+list volume
+exit
